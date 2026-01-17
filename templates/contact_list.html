@@ -4,33 +4,37 @@
 
 {% block content %}
 <table class="table table-dark table-striped">
-  <thead>
-    <tr>
-      <th scope="col">id</th>
-      <th scope="col">Photo</th>
-      <th scope="col">Name</th>
-      <th scope="col">Lastname</th>
-      <th scope="col">Phone</th>
-      <th scope="col">Mail</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td>@fat</td>
-      <td>@fat</td>
-    </tr>
-  </tbody>
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Photo</th>
+            <th scope="col">Name</th>
+            <th scope="col">Lastname</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Mail</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Перебираємо список контактів, переданий у контекст шаблону -->
+        {% for contact in contacts %}
+        <tr> <!-- Новий рядок таблиці для кожного контакту -->
+            <!-- Відображає id контакту -->
+            <th scope="row">{{ contact.id }}</th>
+            <td><!-- Стовпець для фото -->
+                <!-- Відображає фото контакту, якщо є -->
+                <img src="{{ contact.photo.url }}" alt="Contact`s photo" width="50">
+            </td>
+            <!-- Відображає прізвище контакту -->
+            <td>{{ contact.last_name }}</td>
+            <!-- Відображає ім'я контакту -->
+            <td>{{ contact.first_name }}</td>
+            <!-- Відображає номер телефону контакту -->
+            <td>{{ contact.phone_number }}</td>
+            <!-- Відображає email контакту -->
+            <td>{{ contact.email }}</td>
+        </tr>
+        <!-- Завершення циклу перебору контактів -->
+        {% endfor %}
+    </tbody>
 </table>
 {% endblock %}

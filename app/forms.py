@@ -6,9 +6,9 @@ class ContactsForm(forms.ModelForm):
         model = Contact
         fields = [
             'id',
-            'name',
+            'first_name',
             'last_name',
             'phone_number',
-            'mail',
+            'email',
             'photo'
         ]
