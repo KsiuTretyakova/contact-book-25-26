@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from app.views import home, add_contact, about_book
+from app.views import home, add_contact, about_book, edit_contact, delete_contact
 from django.conf import settings
 from django.conf.urls.static import static # Імпортуємо static для роботи з медіафайлами
 
@@ -25,6 +25,8 @@ urlpatterns = [
     path('', home, name='home'),
     path('add_contact/', add_contact, name='add'),
     path('about_book/', about_book, name='about'),
+    path('edit/<int:pk>/', edit_contact, name='edit_contact'),
+    path('delete/<int:pk>/', delete_contact, name='delete_contact')
 ]
 
 # Додаємо обробку медіафайлів у режимі розробки

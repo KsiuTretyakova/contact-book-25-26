@@ -17,7 +17,7 @@
     <tbody>
         <!-- Перебираємо список контактів, переданий у контекст шаблону -->
         {% for contact in contacts %}
-        <tr class="contact-row"> <!-- Новий рядок таблиці для кожного контакту -->
+        <tr class="contact-row" data-contact-id="{{ contact.id }}"> <!-- Новий рядок таблиці для кожного контакту -->
             <!-- Відображає id контакту -->
             <th scope="row">{{ contact.id }}</th>
             <td><!-- Стовпець для фото -->
@@ -35,12 +35,14 @@
         </tr>
 
         <!-- Приховане поле з кнопками -->
-        <tr>
+        <tr id="details-{{ contact.id }}" style="display: none;">
             <td colspan="6" class="">
-                <a href="#">📞Call</a>
-                <a href="#">Write</a>
-                <a href="#">Edit</a>
-                <a href="#">Delete</a>
+                <a href="tel:{{ contact.phone_number }}">📞Call</a>
+                <a href="mailto:{{ contact.email }}#">@ Write</a>
+                <a href="https://wa.me/{{ contact.phone_number }}">WhatsApp Write</a>
+                <a href="https://t.me/{{ contact.phone_number }}">Telegram Write</a>
+                <a href="{% url 'edit_contact' contact.id %}">Edit</a>
+                <a href="{% url 'delete_contact' contact.id %}">Delete</a>
             </td>
         </tr>
 

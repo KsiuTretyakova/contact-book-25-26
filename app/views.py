@@ -36,3 +36,9 @@ def add_contact(request):
 
 def about_book(request):
     return render(request, 'about_book.html')
+
+def edit_contact(request):
+    pass
+
+def delete_contact(request):
+    pass
