@@ -19,7 +19,8 @@
         {% for contact in contacts %}
         <tr class="contact-row" data-contact-id="{{ contact.id }}"> <!-- Новий рядок таблиці для кожного контакту -->
             <!-- Відображає id контакту -->
-            <th scope="row">{{ contact.id }}</th>
+<!--            <th scope="row">{{ contact.id }}</th>-->
+            <th scope="row">{{ forloop.counter }}</th>
             <td><!-- Стовпець для фото -->
                 <!-- Відображає фото контакту, якщо є -->
                 <img src="{{ contact.photo.url }}" alt="Contact`s photo" width="50">
@@ -42,7 +43,11 @@
                 <a href="https://wa.me/{{ contact.phone_number }}">WhatsApp Write</a>
                 <a href="https://t.me/{{ contact.phone_number }}">Telegram Write</a>
                 <a href="{% url 'edit_contact' contact.id %}">Edit</a>
-                <a href="{% url 'delete_contact' contact.id %}">Delete</a>
+                <a href="{% url 'delete_contact' contact.id %}"
+                   onclick="return confirm('Ви впевнені, що хочете видалити цей контакт??')"
+                >
+                    Delete
+                </a>
             </td>
         </tr>
 
