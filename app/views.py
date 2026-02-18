@@ -10,19 +10,36 @@ from .forms import ContactsForm
 
 # Представлення для відображення списку контактів
 def home(request):
-    # Отримуємо всі контакти з бази даних
-    contacts = Contact.objects.all()
 
-    query = request.GET.get('q')
+    # Головна сторінка додатку - відображає список усіх контактів
+    # Підтримує пошук за ім'ям, прізвищем, номером телефону та email
+
+    # Отримуємо всі контакти з бази даних
+    # contacts = Contact.objects.all()
+
+    # Отримуємо параметр пошуку 'q' з GET-запиту.
+    # Якщо параметр відсутній - повертаємо порожній рядок як значення за замовчуванням,
+    # щоб уникнути помилки KeyError та не ламати логіку нижче
+    query = request.GET.get('q', '')
     if query:
+        # Якщо користувач ввів пошуковий запит - фільтруємо контакти
+        # Q-об'єкти дозволяють комбінувати умови через логічне АБО (|),
+        # тобто контакт потрапить у результат, якщо збіг знайдено хоча б в одному полі
+        # icontains - регістронезалежний пошук підрядка (case-insensitive contains)
         contacts = Contact.objects.filter(
-            Q(first_name__icontains=query) |
-            Q(last_name__icontains=query) |
-            Q(phone_number__icontains=query) |
-            Q(email__icontains=query)
+            Q(first_name__icontains=query) |        # Пошук по імені
+            Q(last_name__icontains=query) |         # Пошук по прізвищу
+            Q(phone_number__icontains=query) |      # Пошук по номеру телефону
+            Q(email__icontains=query)               # Пошук по email-адресі
         )
+    else:
+        # Якщо рядок пошуку порожній - повертаємо всі контакти з бази даних
+        # all() повертає QuerySet з усіма записами моделі Contact
+        contacts = Contact.objects.all()
 
     # Передаємо контакти в шаблон
+    # - contacts: відфільтрований або повний список контактів для відображення
+    # - query: поточний пошуковий запит, щоб шаблон міг показати його у полі пошуку
     return render(request, 'contact_list.html',
                   {'contacts': contacts, 'query': query})
 

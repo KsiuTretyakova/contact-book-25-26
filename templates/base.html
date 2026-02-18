@@ -26,15 +26,38 @@
               <a class="nav-link active" aria-current="page"  href="{% url 'about' %}">About Contact`s book</a>
             </li>
           </ul>
+
+          <!-- Форма пошуку контактів -->
+          <!-- method="get" - дані передаються через URL як параметри (?q=...),
+            що дозволяє зберігати та ділитись посиланням на результати пошуку.
+            action="" - форма відправляється на поточну сторінку. -->
           <form
                   class="d-flex"
                   role="search"
                   method="get"
-                  action="{% url 'home' %}"
+                  action=""
           >
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+            <!-- Поле введення пошукового запиту.
+             name="q" - ім'я параметра, яке Django зчитує через request.GET.get('q').
+             value="{{ query }}" - підставляє поточний пошуковий запит із контексту шаблону,
+                щоб після відправки форми текст залишався у полі і користувач бачив свій запит.
+             class="form-control me-2" - стилі Bootstrap: стандартне поле вводу з відступом праворуч.
+             placeholder="Search" - підказка, що відображається у порожньому полі.
+             aria-label="Search" - атрибут доступності для скрінрідерів (людей з вадами зору). -->
+            <input
+                    class="form-control me-2"
+                    type="text"
+                    name="q"
+                    value="{{ query }}"
+                    placeholder="Search"
+                    aria-label="Search"
+            />
+            <!-- Кнопка відправки форми
+             type="submit" - при натисканні ініціює відправку форми
+             class="btn btn-outline-success" - стиль Bootstrap: кнопка із зеленою рамкою. -->
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
+
         </div>
       </div>
     </nav>
